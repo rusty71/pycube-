@@ -5,8 +5,8 @@ The official Android app stopped working on my phone so I decided to try to reve
 The resulting application is currently very barebones with lots of bugs  : https://vimeo.com/242809446 
 For me this was an effort to learn about the NetworkManager, QT, OpenCV and to get my little actionCAM working again.
 
-Requirements:
-  *python-networkmanager  (for controlling your wifi)
-  *python-opencv          (for view finder rtsp stream)
-  *PyQT4
+### Requirements:
+*  python-networkmanager  (for controlling your wifi)
+*  python-opencv          (for view finder rtsp stream)
+*  PyQT4
  
