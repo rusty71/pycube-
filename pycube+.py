@@ -91,7 +91,7 @@ class cubeSession():
         try:
             r = self.s.get("http://192.72.1.1/cgi-bin/%s.cgi" % (page), params = params, timeout=HTTP_TIMEOUT)
             pretty_session(r)
-            if r.content.startswith("712"):
+            if r.content.startswith(b"712"):
                 print("ERRORROROROROROROROORORERRORROROROROROROROORORERRORROROROROROROROORORERRORROROROROROROROOROR")
                 #~ print("Trying to reset session")
                 #~ rr = requests.get("http://192.72.1.1/cgi-bin/User.cgi?logout", timeout=HTTP_TIMEOUT)
@@ -103,12 +103,12 @@ class cubeSession():
 
 
     def login(self):
-        params = urllib.urlencode({"action": "login", "user": "admin", "pass": "admin"})
+        params = urllib.parse.urlencode({"action": "login", "user": "admin", "pass": "admin"})
         r = self.get("User", params)
 
     def keepalive(self):
         self.login()    #FIXME: loses connection whithout
-        params = urllib.urlencode({"action": "get", "property": "Camera.Menu.Alert"})
+        params = urllib.parse.urlencode({"action": "get", "property": "Camera.Menu.Alert"})
         r = self.get("Alert", params)
         #Camera.Menu.Alert=4    Charging
         #Camera.Menu.Alert=8    Recording
@@ -116,19 +116,19 @@ class cubeSession():
 
 
     def record(self):
-        params = urllib.urlencode({"action": "set", "property": "Video", "value": "record_start"})
+        params = urllib.parse.urlencode({"action": "set", "property": "Video", "value": "record_start"})
         r = self.get("Config", params)
 
     def stop(self):
-        params = urllib.urlencode({"action": "set", "property": "Video", "value": "record_stop"})
+        params = urllib.parse.urlencode({"action": "set", "property": "Video", "value": "record_stop"})
         r = self.get("Config", params)
     
     def setResolution(self, res):
-        params = urllib.urlencode({"action": "set", "property": "Videores", "value": res})
+        params = urllib.parse.urlencode({"action": "set", "property": "Videores", "value": res})
         r = self.get("Config", params)
 
     def getLastThumb(self):
-        params = urllib.urlencode({"action": "get", "property": "Camera.Record.TheLastFileName"})
+        params = urllib.parse.urlencode({"action": "get", "property": "Camera.Record.TheLastFileName"})
         r = self.get("Config", params)
         if r.status_code == 200:
             filename = r.content[r.content.find("Camera.Record.TheLastFileName=")+len("Camera.Record.TheLastFileName="):-1]
@@ -138,7 +138,7 @@ class cubeSession():
             return(qimg)
 
     def getLastRec(self):
-        params = urllib.urlencode({"action": "get", "property": "Camera.Record.TheLastFileName"})
+        params = urllib.parse.urlencode({"action": "get", "property": "Camera.Record.TheLastFileName"})
         r = self.get("Config", params)
         if r.status_code == 200:
             filename = r.content[r.content.find("Camera.Record.TheLastFileName=")+len("Camera.Record.TheLastFileName="):-1]
